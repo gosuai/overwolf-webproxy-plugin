@@ -31,7 +31,7 @@ namespace ai.gosu
             this.server = null;
         }
 
-        public event Action<object, object> OnRequest;
+        public event Action<object, object, object> OnRequest;
 
         // Create and configure our web server.
         private WebServer CreateWebServer(string url, string origins, string headers, string methods)
@@ -44,7 +44,9 @@ namespace ai.gosu
             .OnAny(async ctx =>
             {
                 var req = await ctx.GetRequestBodyAsStringAsync();
-                OnRequest?.Invoke(req, ctx.Request.Headers.ToStringDictionary().ToJson());
+                var headers = ctx.Request.Headers.ToStringDictionary().ToJson();
+                var query = ctx.GetRequestQueryData().ToStringDictionary().ToJson();
+                OnRequest?.Invoke(req, headers, query);
                 await ctx.SendDataAsync("OK");
             });
 
