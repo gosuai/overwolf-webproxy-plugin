@@ -3,7 +3,7 @@
 This Overwolf plugin allows to start a local webserver that sends CORS headers to client. It's useful for case when you need to pass some data (ex: authentication token) from your website to Overwolf app.
 
 Usage example:
-```
+```javascript
 // Start web proxy
 const webproxy = await new Promise((resolve, reject) => {
   overwolf.extensions.current.getExtraObject('ai.gosu.webproxy', (e) => {
